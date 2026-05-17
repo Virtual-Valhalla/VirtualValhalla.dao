@@ -9,6 +9,7 @@ siempre pida la versión más reciente durante el desarrollo.
 from flask import Blueprint, render_template, make_response
 
 main_bp = Blueprint('main', __name__)
+globo_bp = Blueprint("globo", __name__)
 
 
 @main_bp.route('/')
@@ -22,3 +23,4 @@ def index():
     resp.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate'
     resp.headers['Pragma'] = 'no-cache'
     return resp
+

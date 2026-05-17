@@ -2,7 +2,8 @@
 __pycache__/
 *.pyc
 
-# Entorno de Replit
+# Entorno 
+.venv
 .pythonlibs/
 .replit
 replit.nix
