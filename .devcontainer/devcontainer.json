@@ -2,11 +2,13 @@
   "name": "Flask App",
   "image": "://microsoft.com",
 
-  // 1. Instala dependencias SOLO al crear el Codespace por primera vez
-  "postCreateCommand": "pip install -r requirements.txt",
+  // Añade esta propiedad para instalar Git LFS automáticamente
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {}
+  },
 
-  // 2. Arranca Flask CADA VEZ que se inicia el Codespace
-  "postStartCommand": "flask run --host=0.0.0.0 &",
+  "postCreateCommand": "pip install -r requirements.txt",
+  "postStartCommand": "flask run --host=0.0.0.0 > flask.log 2>&1 &",
 
   "containerEnv": {
     "FLASK_APP": "app.py",
