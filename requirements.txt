@@ -1,0 +1,12 @@
+Flask==3.1.1
+requests==2.32.4
+beautifulsoup4==4.14.3
+python-dotenv==1.2.2
+Flask-SQLAlchemy>=3.0.0
+gunicorn
+lxml
+beautifulsoup4
+gunicorn
+lxml
+python-dotenv
+requests

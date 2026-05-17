@@ -1,0 +1,622 @@
+/* ════════════════════════════════════════════════════════════════════ */
+/* TERMINAL.CSS — Console, Terminal, Reader, News items, Buttons       */
+/* ════════════════════════════════════════════════════════════════════ */
+
+/* ── CONSOLE panel (top-right) ──────────────────────────────────────── */
+.error-console {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40vw;
+    max-width: 475px;
+    max-height: 20vh;
+    border: 2px solid #00ffff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px;
+    z-index: 1000;
+    box-shadow: 0 0 20px #00ffff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.error-console.panel-revealed {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00ffff;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    color: #00ffff;
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.console-buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.console-btn {
+    background: #00ffff;
+    color: #000;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.5em;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.console-btn:hover {
+    background: #ff00ff;
+    box-shadow: 0 0 10px #ff00ff;
+}
+
+.console-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.7em;
+    scrollbar-width: thin;
+    scrollbar-color: #00ffff #000;
+    min-height: 30px;
+    max-height: 140px;
+}
+
+.console-message {
+    margin: 3px 0;
+    padding: 4px 8px;
+    border-left: 3px solid;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.console-time  { color: #888; font-weight: bold; min-width: 65px; }
+.console-type  { min-width: 70px; }
+
+.msg-error   { border-left-color: #ff0000; color: #ff4444; }
+.msg-warning { border-left-color: #ffff00; color: #ffff44; }
+.msg-success { border-left-color: #00ff00; color: #44ff44; }
+.msg-info    { border-left-color: #00ffff; color: #44ffff; }
+.msg-debug   { border-left-color: #888888; color: #aaaaaa; }
+
+.console-collapsed .console-content { display: none; }
+
+/* ── TERMINAL panel (left) ──────────────────────────────────────────── */
+.terminal-box {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 35vw;
+    max-width: 475px;
+    max-height: 95vh;
+    border: 2px solid #ff00ff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 12px;
+    z-index: 100;
+    box-shadow: 0 0 20px #ff00ff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.terminal-box.panel-revealed {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.terminal-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00ffff;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    color: #00ffff;
+    font-weight: bold;
+    font-size: 1.0em;
+}
+
+.terminal-box-header2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    color: #00ffff;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.terminal-box-buttons { display: flex; gap: 6px; }
+
+.terminal-box-btn {
+    background: #00ffff;
+    color: #000;
+    border: none;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.5em;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.terminal-box-btn:hover {
+    background: #ff00ff;
+    box-shadow: 0 0 10px #ff00ff;
+}
+
+.terminal-box-status {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 0.8em;
+    scrollbar-width: thin;
+    scrollbar-color: #00ffff #000;
+    min-height: 30px;
+    max-height: 77vh;
+}
+
+.terminal-box-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 1.2em;
+    scrollbar-width: thin;
+    scrollbar-color: #ff00ff #000;
+}
+
+.terminal-box-message {
+    margin: 3px 0;
+    padding: 4px 8px;
+    border-left: 3px solid;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.terminal-box-time { color: #888; font-weight: bold; min-width: 65px; }
+.terminal-box-type { min-width: 70px; }
+
+.terminal-boxmsg-error   { border-left-color: #ff0000; color: #ff4444; }
+.terminal-boxmsg-warning { border-left-color: #ffff00; color: #ffff44; }
+.terminal-boxmsg-success { border-left-color: #00ff00; color: #44ff44; }
+.terminal-boxmsg-info    { border-left-color: #00ffff; color: #44ffff; }
+.terminal-boxmsg-debug   { border-left-color: #888888; color: #aaaaaa; }
+
+.terminal-box-collapsed .terminal-box-content,
+.terminal-box-collapsed .terminal-box-status,
+.terminal-box-collapsed .terminal-box-header2,
+.terminal-box-collapsed .category-row,
+.terminal-box-collapsed .cat-dropdown { display: none; }
+
+/* ── Category selector (arrows + label + dropdown) ──────────────────── */
+.category-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-top: 1px solid rgba(0, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    margin-bottom: 0;
+    user-select: none;
+}
+
+.cat-label {
+    color: #ff00ff;
+    font-size: 0.78em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.cat-label:hover { color: #ff66ff; }
+
+.cat-arrow {
+    background: transparent;
+    border: 1px solid #ff00ff;
+    color: #ff00ff;
+    font-size: 0.7em;
+    padding: 3px 8px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 0.15s, color 0.15s;
+}
+
+.cat-arrow:hover  { background: #ff00ff; color: #000; }
+.cat-arrow:active { transform: scale(0.92); }
+
+/* ── Category dropdown ──────────────────────────────────────────────── */
+.cat-dropdown {
+    display: none;
+    background: rgba(0, 0, 8, 0.97);
+    border: 1px solid #ff00ff66;
+    border-top: none;
+    margin-bottom: 4px;
+    box-shadow: 0 6px 18px rgba(255, 0, 255, 0.25);
+    z-index: 50;
+}
+
+.cat-dd-item {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ff00ff77;
+    border-left: 2px solid transparent;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.cat-dd-item:hover {
+    background: rgba(255, 0, 255, 0.1);
+    color: #ff00ff;
+    border-left-color: #ff00ff;
+}
+
+.cat-dd-active {
+    color: #ff00ff;
+    border-left-color: #ff00ff;
+    background: rgba(255, 0, 255, 0.07);
+}
+
+.back-btn {
+    display: none;
+    background: #ff00ff;
+    color: #000;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 15px;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+/* ── NEWS items ─────────────────────────────────────────────────────── */
+.news-item {
+    margin-bottom: 6px;
+    padding: 7px 10px;
+    border-left: 2px solid #00ffff;
+    background: rgba(0, 255, 255, 0.04);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: flex-start;
+}
+
+.news-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+}
+
+.news-rank {
+    color: #ff00ff;
+    font-weight: bold;
+    font-size: 0.72em;
+    opacity: 0.9;
+    flex-shrink: 0;
+}
+
+.news-title-text {
+    color: #00ffff;
+    font-size: 0.78em;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-src {
+    color: #ff00ff88;
+    font-size: 0.65em;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.news-item:hover {
+    background: rgba(255, 0, 255, 0.1);
+    border-left-color: #ff00ff;
+}
+
+.news-link {
+    color: #ff00ff;
+    text-decoration: none;
+    font-size: 0.75em;
+    display: inline-block;
+    margin-top: 8px;
+    border: 1px solid #ff00ff55;
+    padding: 4px 8px;
+    letter-spacing: 1px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.news-link:hover { background: #ff00ff; color: #000; }
+
+/* ── DATA DECRYPTOR / READER panel (bottom-right) ───────────────────── */
+.reader-box {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 38vw;
+    max-width: 520px;
+    max-height: 78vh;
+    border: 2px solid #00ffff;
+    background: rgba(0, 8, 20, 0.96);
+    padding: 0;
+    z-index: 200;
+    box-shadow: 0 0 28px #00ffff55, inset 0 0 40px rgba(0, 255, 255, 0.03);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reader-box.reader-visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+.reader-header {
+    border-bottom: 1px solid #00ffff44;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.72em;
+    color: #00ffff;
+    letter-spacing: 2px;
+    background: rgba(0, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.close-btn { cursor: pointer; color: #ff0000; font-weight: bold; transition: color 0.2s; }
+.close-btn:hover { color: #ff6666; }
+
+.reader-content {
+    font-size: 0.82em;
+    color: #aaffff;
+    overflow-y: auto;
+    flex-grow: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #00ffff55 #000;
+    padding: 0 0 12px 0;
+}
+
+.reader-media-wrap {
+    width: 100%;
+    height: 210px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-bottom: 1px solid #00ffff33;
+    background: #000;
+    position: relative;
+}
+
+.reader-media-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 20, 30, 0.9);
+}
+
+.reader-media-spinner {
+    color: #00ffff88;
+    font-size: 0.72em;
+    letter-spacing: 2px;
+    animation: pulse-opacity 1.2s ease-in-out infinite;
+}
+
+.reader-media-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 0, 255, 0.04);
+    height: 60px;
+}
+
+.reader-no-media { color: #ff00ff44; font-size: 0.7em; letter-spacing: 2px; }
+
+@keyframes pulse-opacity {
+    0%, 100% { opacity: 0.4; }
+    50%       { opacity: 1; }
+}
+
+.reader-image {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.15) contrast(1.05);
+}
+
+.reader-video {
+    width: 100%;
+    height: 210px;
+    display: block;
+    border: none;
+    background: #000;
+}
+
+.reader-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px 4px;
+    border-bottom: 1px solid #00ffff22;
+    gap: 6px;
+}
+
+.reader-source {
+    color: #ff00ff;
+    font-size: 0.68em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.reader-date { color: #00ffff77; font-size: 0.65em; white-space: nowrap; }
+
+.reader-title {
+    color: #00ffff;
+    font-size: 0.88em;
+    font-weight: bold;
+    line-height: 1.4;
+    margin: 10px 14px 6px;
+    padding: 0;
+}
+
+.reader-desc {
+    color: #88dddd;
+    font-size: 0.78em;
+    line-height: 1.6;
+    margin: 0 14px 10px;
+    padding: 0;
+    border-left: 2px solid #00ffff33;
+    padding-left: 10px;
+}
+
+/* ── Full article content area ──────────────────────────────────────── */
+.reader-full-content {
+    margin: 0 14px 10px;
+}
+
+.reader-content-divider {
+    color: #00ffff44;
+    font-size: 0.6em;
+    letter-spacing: 3px;
+    text-align: center;
+    margin: 12px 0 8px;
+    border-top: 1px solid #00ffff22;
+    padding-top: 8px;
+}
+
+.reader-content-text {
+    color: #99cccc;
+    font-size: 0.73em;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border-left: 2px solid #00ffff22;
+    padding-left: 10px;
+}
+
+/* ── Error box & retry button ───────────────────────────────────────── */
+.error-box {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid #ff0000;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 10px 0;
+    color: #ff4444;
+}
+
+.retry-btn {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.retry-btn:hover {
+    background: #ff00ff;
+    box-shadow: 0 0 8px #ff00ff;
+}
+
+/* ── NEWS_GLOBO | Mobile Vertical Stack (Sovereign Manual Fix) ── */
+@media (max-width: 768px) {
+    #globeViz {
+        left: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw;
+        z-index: 1;
+    }
+
+    /* 1. CONSOLA: Arriba, centrada, 15% de alto, 95% de ancho */
+    .error-console {
+        bottom: auto;
+
+        position: fixed !important;
+        top: 2vh !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-12px);
+        width: 80vw !important;
+        max-width: 80vw;
+        max-height: 25vh !important;
+        margin: 0 !important;
+        /* z-index: 10 !important; /* Respetando z-index original */
+        border-radius: 8px 8px 0 0;
+    }
+
+    .error-console.panel-revealed {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .terminal-box {
+        position: fixed !important;
+        top: auto;
+        bottom: 10px !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-12px);
+        width: 80vw !important;
+        max-width: 80vw !important;
+        max-height: 40vh !important;
+        margin: 0 !important;
+        /* z-index: 100 !important; /* Respetando z-index original */
+        border-radius: 8px 8px 0 0;
+    }
+
+    .terminal-box.panel-revealed {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .reader-box {
+        bottom: 25vh;
+        left: 50%;
+        transform: translateX(-50%) translateY(16px);
+        width: 90vw;
+        max-width: 90vw;
+        max-height: 60vh;
+        /* z-index: 200; /* Respetando z-index original */
+        border-radius: 8px;
+    }
+
+    .reader-box.reader-visible {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+

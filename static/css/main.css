@@ -1,0 +1,44 @@
+/* ════════════════════════════════════════════════════════════════════ */
+/* MAIN.CSS — Base styles, globe container, typography, responsive     */
+/* ════════════════════════════════════════════════════════════════════ */
+
+body {
+    margin: 0;
+    background: #000;
+    color: #00ffff;
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+}
+
+#globeViz {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+h2 {
+    color: #00ffff;
+    border-bottom: 2px solid #00ffff;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.status-line {
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.active {
+    color: #00ff00;
+}
+
+.node-info {
+    color: #ff00ff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+

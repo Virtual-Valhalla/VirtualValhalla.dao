@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL_V.1 - GEO-SCANNER</title>
+
+    <!-- Suppress known globe.gl internal Three.js duplicate warning -->
+    <script>
+        (function () {
+            var _warn = console.warn;
+            console.warn = function () {
+                var msg = arguments[0];
+                if (msg && typeof msg === 'string' && (
+                    msg.indexOf('Multiple instances of Three.js') !== -1 ||
+                    msg.indexOf('build/three.min.js') !== -1 ||
+                    msg.indexOf('build/three.js') !== -1
+                )) return;
+                _warn.apply(console, arguments);
+            };
+        })();
+    </script>
+
+    <!-- Vendor: Three.js -->
+    <script src="{{ url_for('static', filename='vendor/three.min.js') }}"></script>
+
+    <!-- THREE.Timer polyfill (backfilled for globe.gl compatibility) -->
+    <script>
+        if (typeof THREE !== 'undefined' && !THREE.Timer) {
+            THREE.Timer = function () {
+                this._previousTime = 0; this._currentTime = 0;
+                this._delta = 0; this._elapsed = 0; this._timescale = 1;
+            };
+            THREE.Timer.prototype.update = function (ts) {
+                if (ts === undefined) ts = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+                this._delta = ((ts - this._previousTime) / 1000) * this._timescale;
+                this._elapsed += this._delta; this._previousTime = ts; this._currentTime = ts;
+                return this;
+            };
+            THREE.Timer.prototype.getDelta    = function () { return this._delta; };
+            THREE.Timer.prototype.getElapsed  = function () { return this._elapsed; };
+            THREE.Timer.prototype.getTimescale= function () { return this._timescale; };
+            THREE.Timer.prototype.setTimescale= function (v) { this._timescale = v; return this; };
+            THREE.Timer.prototype.reset       = function () {
+                this._currentTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+                this._previousTime = this._currentTime; this._delta = 0; return this;
+            };
+            THREE.Timer.prototype.dispose = function () { return this; };
+        }
+    </script>
+
+    <!-- Vendor: Globe.gl -->
+    <script src="{{ url_for('static', filename='vendor/globe.gl.min.js') }}"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/terminal.css') }}">
+</head>
+
+<body>
+
+    <!-- 3D GLOBE -->
+    <div id="globeViz"></div>
+
+    <!-- CONSOLE panel -->
+    <div id="error-console" class="error-console">
+        <div class="console-header">
+            <span>CONSOLE</span>
+            <div class="console-buttons">
+                <button class="console-btn" onclick="clearConsole()">LIMPIAR</button>
+                <button class="console-btn" id="collapse-btn" onclick="toggleConsole()">−</button>
+            </div>
+        </div>
+        <div id="console-content" class="console-content">
+            <div class="console-message msg-info">
+                <span class="console-time">[--:--:--]</span>
+                <span class="console-type">ℹ️ INFO</span>
+                <span>Sistema iniciado. Esperando eventos...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEWS TERMINAL panel -->
+    <div class="terminal-box">
+        <div class="terminal-box-header">
+            <span>NEWS_TERMINAL</span>
+            <div class="terminal-box-buttons">
+                <button class="terminal-box-btn" onclick="toggleTerminal()">−</button>
+            </div>
+        </div>
+        <div class="terminal-box-header2">
+            <div class="terminal-boxmsg-info">STATUS: <span class="active">ACTIVE</span></div>
+            <div id="node-label" class="terminal-boxmsg-info">NODE: <span class="terminal-boxmsg-success">GLOBAL_FEED</span></div>
+        </div>
+        <div class="terminal-box-header2 category-row">
+            <button class="cat-arrow" id="cat-prev" onclick="prevCategory()">&#9664;</button>
+            <span id="cat-label" class="cat-label" onclick="toggleCatDropdown()">GENERAL ▾</span>
+            <button class="cat-arrow" id="cat-next" onclick="nextCategory()">&#9654;</button>
+        </div>
+        <div id="cat-dropdown" class="cat-dropdown"></div>
+        <div class="terminal-box-header2">
+            <button id="back-button" class="back-btn" onclick="resetToGlobal()">> RESET_CAMERA</button>
+        </div>
+        <div id="terminal-content" class="terminal-box-status">
+            <div id="news-container" class="terminal-box-content">
+                <div class="terminal-boxmsg-warning">> ESCANEANDO...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATA DECRYPTOR panel -->
+    <div id="news-reader" class="reader-box">
+        <div class="reader-header">
+            <span>DATA_DECRYPTOR_V.1</span>
+            <span class="close-btn" onclick="closeReader()">[X]</span>
+        </div>
+        <div id="reader-body" class="reader-content"></div>
+    </div>
+
+    <!-- Article viewer (legacy) -->
+    <div id="articleViewer" style="
+        position:absolute; top:50px; right:20px;
+        width:400px; height:80%; overflow-y:auto;
+        background:rgba(0,0,0,0.85); color:#00ffff;
+        padding:15px; border:1px solid #00ffff;
+        font-family:monospace; display:none;">
+    </div>
+
+    <!-- GSAP (animation library) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- Components -->
+    <script src="{{ url_for('static', filename='js/components/console.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/components/terminal.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/components/reader.js') }}"></script>
+
+    <!-- Core: intro animation -->
+    <script src="{{ url_for('static', filename='js/intro.js') }}"></script>
+
+    <!-- Core: globe engine -->
+    <script src="{{ url_for('static', filename='js/core/globe_engine.js') }}"></script>
+
+    <!-- App: main logic -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+</html>
