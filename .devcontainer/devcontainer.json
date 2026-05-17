@@ -1,7 +1,22 @@
 {
-  "name": "Mi Proyecto",
+  "name": "Flask App",
   "image": "://microsoft.com",
-  
-  // Ejecuta la aplicación en segundo plano cada vez que arranca el Codespace
-  "postStartCommand": "python app.py &"
+
+  // 1. Instala dependencias SOLO al crear el Codespace por primera vez
+  "postCreateCommand": "pip install -r requirements.txt",
+
+  // 2. Arranca Flask CADA VEZ que se inicia el Codespace
+  "postStartCommand": "flask run --host=0.0.0.0 &",
+
+  "containerEnv": {
+    "FLASK_APP": "app.py",
+    "FLASK_DEBUG": "1"
+  },
+  "forwardPorts": [5000],
+  "portsAttributes": {
+    "5000": {
+      "label": "Aplicación Flask",
+      "onAutoForward": "openPreview"
+    }
+  }
 }
