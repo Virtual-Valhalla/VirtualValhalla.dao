@@ -1,16 +1,7 @@
 {
-  "name": "Flask App",
+  "name": "Mi Proyecto",
   "image": "://microsoft.com",
-
-  // 1. Arranca Flask en segundo plano al iniciar el Codespace
-  "postStartCommand": "flask run --host=0.0.0.0 &",
-
-  // 2. Expone y configura el puerto para que sea accesible
-  "forwardPorts": [5000],
-  "portsAttributes": {
-    "5000": {
-      "label": "Aplicación Flask",
-      "onAutoForward": "openPreview"
-    }
-  }
+  
+  // Ejecuta la aplicación en segundo plano cada vez que arranca el Codespace
+  "postStartCommand": "python app.py &"
 }
