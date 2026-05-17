@@ -2,18 +2,10 @@
   "name": "Flask App",
   "image": "://microsoft.com",
 
-  // Añade esta propiedad para instalar Git LFS automáticamente
-  "features": {
-    "ghcr.io/devcontainers/features/git-lfs:1": {}
-  },
+  // 1. Arranca Flask en segundo plano al iniciar el Codespace
+  "postStartCommand": "flask run --host=0.0.0.0 &",
 
-  "postCreateCommand": "pip install -r requirements.txt",
-  "postStartCommand": "flask run --host=0.0.0.0 > flask.log 2>&1 &",
-
-  "containerEnv": {
-    "FLASK_APP": "app.py",
-    "FLASK_DEBUG": "1"
-  },
+  // 2. Expone y configura el puerto para que sea accesible
   "forwardPorts": [5000],
   "portsAttributes": {
     "5000": {
