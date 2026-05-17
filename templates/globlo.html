@@ -3,8 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIRTUAL VALHALLA DAO</title>
+    <title>TERMINAL_V.1 - GEO-SCANNER</title>
 
+    <!-- Suppress known globe.gl internal Three.js duplicate warning -->
+    <script>
+        (function () {
+            var _warn = console.warn;
+            console.warn = function () {
+                var msg = arguments[0];
+                if (msg && typeof msg === 'string' && (
+                    msg.indexOf('Multiple instances of Three.js') !== -1 ||
+                    msg.indexOf('build/three.min.js') !== -1 ||
+                    msg.indexOf('build/three.js') !== -1
+                )) return;
+                _warn.apply(console, arguments);
+            };
+        })();
+    </script>
+
+    <!-- Vendor: Three.js -->
+    <script src="{{ url_for('static', filename='vendor/three.min.js') }}"></script>
+
+    <!-- THREE.Timer polyfill (backfilled for globe.gl compatibility) -->
+    <script>
+        if (typeof THREE !== 'undefined' && !THREE.Timer) {
+            THREE.Timer = function () {
+                this._previousTime = 0; this._currentTime = 0;
+                this._delta = 0; this._elapsed = 0; this._timescale = 1;
+            };
+            THREE.Timer.prototype.update = function (ts) {
+                if (ts === undefined) ts = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+                this._delta = ((ts - this._previousTime) / 1000) * this._timescale;
+                this._elapsed += this._delta; this._previousTime = ts; this._currentTime = ts;
+                return this;
+            };
+            THREE.Timer.prototype.getDelta    = function () { return this._delta; };
+            THREE.Timer.prototype.getElapsed  = function () { return this._elapsed; };
+            THREE.Timer.prototype.getTimescale= function () { return this._timescale; };
+            THREE.Timer.prototype.setTimescale= function (v) { this._timescale = v; return this; };
+            THREE.Timer.prototype.reset       = function () {
+                this._currentTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+                this._previousTime = this._currentTime; this._delta = 0; return this;
+            };
+            THREE.Timer.prototype.dispose = function () { return this; };
+        }
+    </script>
+
+    <!-- Vendor: Globe.gl -->
+    <script src="{{ url_for('static', filename='vendor/globe.gl.min.js') }}"></script>
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -12,6 +58,9 @@
 </head>
 
 <body>
+
+    <!-- 3D GLOBE -->
+    <div id="globeViz"></div>
 
     <!-- CONSOLE panel -->
     <div id="error-console" class="error-console">
