@@ -1,0 +1,14 @@
+# Python: Archivos compilados que querías borrar
+__pycache__/
+*.pyc
+
+# Entorno de Replit
+.pythonlibs/
+.replit
+replit.nix
+
+# Seguridad: Archivos con API Keys
+.env
+
+# Bases de datos locales (opcional, si no quieres subir la DB de pruebas)
+*.db
