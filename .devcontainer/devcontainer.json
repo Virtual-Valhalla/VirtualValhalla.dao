@@ -1,0 +1,7 @@
+{
+  "name": "Mi Proyecto",
+  "image": "://microsoft.com",
+  
+  // Ejecuta la aplicación en segundo plano cada vez que arranca el Codespace
+  "postStartCommand": "python app.py &"
+}

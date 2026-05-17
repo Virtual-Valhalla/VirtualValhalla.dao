@@ -61,11 +61,12 @@ body{
 }
 
 .line{
-    width:120px;
+    width:50vw;
     height:2px;
     background:white;
     margin:0 auto 25px auto;
     opacity:0.7;
+    align-items: center;
 }
 
 .subtitle{
