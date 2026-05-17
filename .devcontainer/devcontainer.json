@@ -1,13 +1,11 @@
 {
   "name": "Flask App",
   "image": "://microsoft.com",
-
-  // 1. Instala dependencias SOLO al crear el Codespace por primera vez
+  "features": {
+    "ghcr.io/devcontainers/features/git-lfs:1": {}
+  },
   "postCreateCommand": "pip install -r requirements.txt",
-
-  // 2. Arranca Flask CADA VEZ que se inicia el Codespace
-  "postStartCommand": "flask run --host=0.0.0.0 &",
-
+  "postStartCommand": "flask run --host=0.0.0.0 > flask.log 2>&1 &",
   "containerEnv": {
     "FLASK_APP": "app.py",
     "FLASK_DEBUG": "1"
